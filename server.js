@@ -43,7 +43,9 @@ app.get("/api/gold-price", async (req, res) => {
     res.status(500).json({ error: "فشل في جلب السعر" });
   }
 });
-
+app.get("/", (req, res) => {
+  res.send("Gold API is running 🚀");
+});
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
