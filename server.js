@@ -29,10 +29,24 @@ app.get("/api/gold-price", async (req, res) => {
 
     const data = await response.json();
 
-    const result = {
-      price24k: data.price_gram_24k,
-      timestamp: data.timestamp
-    };
+const data = await response.json();
+
+if (!data || data.error) {
+  console.log("API ERROR:", data);
+  return res.status(500).json({
+    error: "Gold API failed",
+    details: data
+  });
+}
+
+const result = {
+  price24k: data.price_gram_24k || 0,
+  price21k: data.price_gram_21k || 0,
+  price18k: data.price_gram_18k || 0,
+  timestamp: data.timestamp || Date.now()
+};
+
+res.json(result);
 
     cachedData = result;
     lastFetch = now;
